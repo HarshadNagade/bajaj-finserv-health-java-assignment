@@ -1,0 +1,22 @@
+Problem Statement:
+You are required to calculate the number of employees who are younger than each
+employee, grouped by their respective departments. For each employee, return the
+count of employees in the same department whose age is less than theirs.
+
+
+
+SELECT 
+    e.EMP_ID,
+    e.FIRST_NAME,
+    e.LAST_NAME,
+    d.DEPARTMENT_NAME,
+    (SELECT COUNT(*) 
+     FROM EMPLOYEE e2
+     WHERE e2.DEPARTMENT = e.DEPARTMENT
+       AND TIMESTAMPDIFF(YEAR, e2.DOB, e.DOB) > 0) AS YOUNGER_EMPLOYEES_COUNT
+FROM 
+    EMPLOYEE e
+JOIN 
+    DEPARTMENT d ON e.DEPARTMENT = d.DEPARTMENT_ID
+ORDER BY 
+    e.EMP_ID DESC;
